@@ -1,0 +1,219 @@
+*{
+    margin:0;
+    padding:0;
+}
+@maincolor:#E42D32;
+@fc333:#333;
+@fc444:#444;
+@fc555:#555;
+@fc666:#666;
+@fc999:#999;
+@fsz12:1.2rem;
+@fsz14:1.4rem;
+@fsz16:1.6rem;
+@fsz18:1.8rem;
+@fsz20:2rem;
+@fsz22:2.2rem;
+@fsz24:2.4rem;
+@fsz26:2.6rem;
+@fsz28:2.8rem;
+@fsz30:3rem;
+@fsz32:3.2rem;
+@fsz34:3.4rem;
+@fsz36:3.6rem;
+@fwb5:500;
+@fwb6:600;
+@fwb7:700;
+@fwb:bold;
+.bgmain{
+    background-color: @maincolor;
+}
+.bgfff{
+    background-color: #fff;
+}
+.maincol{
+    color: @maincolor;
+}
+.fwb{
+    font-weight: @fwb;
+}
+.fwb5{
+    font-weight: @fwb5;
+}
+.fwb6{
+    font-weight: @fwb6;
+}
+.fwb7{
+    font-weight: @fwb7;
+}
+.fsz12{
+    font-size: @fsz12;
+}
+.fsz14{
+    font-size: @fsz14;
+}
+.fsz16{
+    font-size: @fsz16;
+}
+.fsz18{
+    font-size: @fsz18;
+}
+.fsz20{
+    font-size: @fsz20;
+}
+.fsz22{
+    font-size: @fsz22;
+}
+.fsz24{
+    font-size: @fsz24;
+}
+.fsz26{
+    font-size: @fsz26;
+}
+.fsz28{
+    font-size: @fsz28;
+}
+.fsz30{
+    font-size: @fsz30;
+}
+.fsz32{
+    font-size: @fsz32;
+}
+.fsz34{
+    font-size: @fsz34;
+}
+.fsz36{
+    font-size: @fsz36;
+}
+.fcol333{
+    color: @fc333;
+}
+.fcol444{
+    color: @fc444;
+}
+.fcol555{
+    color: @fc555;
+}
+.fcol666{
+    color: @fc666;
+}
+.fcol999{
+    color: @fc999;
+}
+.tal{
+    text-align: left;
+}
+.tac{
+    text-align: center;
+}
+.tar{
+    text-align: right;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.clearfix:after,.clearfix:before{
+    content: "";
+    display: table;
+}
+.clearfix:after{
+    clear: both;
+}
+.clearfix{
+    *zoom: 1;
+}
+html{
+    font-size: 62.5%;
+}
+body{
+    background-color: #FAFAFA;
+}
+.fx{
+    box-sizing:border-box;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items: center;
+}
+// 宫格
+.gridicon{
+    .van-icon{
+        img{
+            width: 4rem;
+            height: 4rem;
+        }
+    }
+}
+// 滚动公告
+.slideggbox{
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    padding: 0 1.2rem .5rem;
+    .van-swipe{
+        height: 30px;
+        overflow: hidden;
+    }
+    .van-swipe-item{
+        position: relative;
+        padding-left: .8rem;
+        span{
+            display: block;
+            height: 30px;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+        }
+        &::before{
+            content: "";
+            width: .5rem;
+            height: .5rem;
+            background-color: #2A73CC;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            margin-top: -.25rem;
+        }
+    }
+    .ggtt{
+        margin-right: 1rem;
+        color: #2A73CC;
+    }
+}
+
+// 商品列表
+.lybox{
+    padding: 1.8rem 0.12rem 0;
+    margin:0 !important;
+    background-color: #fff;
+}
+.itemswrap{
+    background:rgba(255,255,255,1);
+    box-shadow:0px 2px 8px 0px rgba(30,90,151,0.17);
+    border-radius:1rem;
+    margin-bottom: 1.8rem;
+    .van-image__img{
+        border-radius:1rem 1rem 0 0;
+    }
+    .itemsfooter{
+        padding: .5rem .8rem;
+        .itemstitle{
+            line-height: 1.6rem;
+            
+        }
+        .itemsjgbtn{
+            padding: 1rem 0 .5rem;
+            .ibbuybtn{
+                padding: 0 .5rem;
+                &::after{
+                    border-radius: 1rem;
+                }
+            }
+        }
+    }
+}
