@@ -6,7 +6,7 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover"
     />
-    <title>Document</title>
+    <title>村长首页</title>
     <link
     rel="stylesheet"
     href="./css/normalize.css"
@@ -22,9 +22,15 @@
 </head>
 <body>
     <div id="app">
-        app page
-        <test></test>
-        <router-view></router-view>
+        <!-- <test></test> -->
+        <transition :name="transitionName" mode="out-in">
+            <router-view :class="isshownav ? 'child-view pb' : 'child-view'"></router-view>
+        </transition>
+        <van-tabbar v-if="isshownav" placeholder="{{true}}" route="{{true}}" active-color="#E42D32" inactive-color="#333333" v-model="active">
+            <van-tabbar-item icon="home-o" to="/">首页</van-tabbar-item>
+            <van-tabbar-item icon="search" to="/item">项目</van-tabbar-item>
+            <van-tabbar-item icon="friends-o" to="/my/center">我的</van-tabbar-item>
+        </van-tabbar>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
@@ -32,33 +38,102 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.1.3/vue-router.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vant@2.6/lib/vant.min.js"></script>
     <script src="./js/axios.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.9.4/qs.min.js"></script>
     <script type="module">
         import luyou from './js/router.js'
         import utils from './js/public.js'
+        import myMixin from "./js/mixins.js";
+        Vue.mixin(myMixin)
+        Vue.prototype.utils = utils;
+        Vue.prototype.luyou = luyou;
         Vue.use(httpVueLoader, VueRouter, vant, utils);
         let router = luyou.router;
         let src = luyou.tp;
         var app = new Vue({
             router,
             el: '#app',
-            components:{
-                'test': src('./components/Test.vue')
-            },
+            // components:{
+            //     'test': src('./components/Test.vue')
+            // },
             data:{
+                active:0,
                 datas:{//存放请求数据
-
+                    
+                },
+                isshownav:true,
+                transitionName: ''
+            },
+            watch: {
+                $route: {
+                    handler(val, oldVal){
+                        let that = this;
+                        let isBack = that.$router.isBack;
+                        if(val.meta.nav == true){
+                            that.isshownav = true
+                            that.transitionName = ''
+                        }else{
+                            that.isshownav = false
+                        }
+                        if (isBack) {
+                            that.transitionName = 'slide-right'
+                        } else {
+                            that.transitionName = 'slide-left'
+                        }
+                        that.$router.isBack = false
+                        //console.log(val, oldVal);
+                        document.title = val.meta.title
+                        //console.log(123, typeof(localStorage.getItem('userinfo')), ('789-'+that.userinfo.mobile || '321'+localStorage.getItem('islogin').mobile))
+                        if(val.meta.haslogin){ //检查登录是否过期
+                            if(localStorage.getItem('islogin')){
+                                let mobile = JSON.parse(localStorage.getItem('userinfo')).mobile;
+                                // mobile = that.userinfo.mobile || mobile;
+                                that.utils.vajax('post', 'hquserxx', {mobile: mobile}).then(res => {
+                                    let code = res.data.stare;
+                                    let msg = res.data.msg;
+                                    let myDatas = res.data.data;
+                                    if(code == 200){
+                                        console.log('登录状态正常！');
+                                        localStorage.setItem('userinfo', JSON.stringify(myDatas) || '{}');
+                                        localStorage.setItem('islogin', true);
+                                        localStorage.setItem('token', myDatas.token || null);
+                                        Vue.set(that, 'islogin', true);
+                                        Vue.set(that, 'token', myDatas.token || null);
+                                        Vue.set(that, 'userinfo', myDatas);
+                                    }else{
+                                        console.log('登录状态失效！');
+                                        localStorage.clear();
+                                    }
+                                }).catch(err => {
+                                    //vant.Toast.fail('加载失败！');
+                                });
+                            }else{
+                                localStorage.clear();
+                                console.log(11, '登录状态失效！');
+                                return;
+                            }
+                        }
+                    },
+                    // 深度观察监听
+                    deep: true
                 }
             },
-            watch: {},
             created(){
-                utils.vajax('get', 'huoqulbt', {}).then(res => {
-                    console.log(res);
-                }).catch(err => {
-                    console.log(err);
-                });
+                
             },
             mounted(){},
-            methods: {}
+            methods: {
+                openview(d){
+                    console.log(e)
+                },
+                tabnav(e){
+                    console.log(e)
+                }
+            },
+            computed: {
+                // user(){
+                //     return this.islogin;
+                // }
+            }
         })
     </script>
 </body>
